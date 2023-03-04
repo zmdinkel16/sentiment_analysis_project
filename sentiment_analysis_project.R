@@ -35,6 +35,24 @@ df$date.sent <- as.Date(df$date.sent, format = "%m/%d/%Y")
 df$sub.product[df$sub.product == ""] <- NA
 
 
+
+# Graphs not in Shiny App
+# Creating dataframe to include number of complaints by month
+complaints_by_month <- df %>%
+  select(date.received, product) %>%
+  mutate(month = month(date.received)) %>%
+  group_by(month) %>%
+  summarise(count = n())
+# Plotting total complaints by month
+ggplot(complaints_by_month, aes(month, count)) +
+  geom_line(color = "red", size = 1.5) +
+  geom_point(color = "blue", size = 3, shape = 21, fill = "white") +
+  scale_x_continuous(limits = c(1, 12), breaks = 1:12, labels = month.name) +
+  ggtitle('Total Complaints by Month')
+
+
+
+# Graphs in shiny app
 # Creating tidy dataframe to perform sentiment analysis
 company_complaints_tidy <- df %>%
   select(company, consumer.complaint.narrative, state) %>%
@@ -81,6 +99,13 @@ afinn <- most_common_issue %>%
 # Eliminating N/A values by making them 0
 afinn$sentiment[is.na(afinn$sentiment)] <- 0
 
+
+# Creating dataframe to show most common complaints
+common_complaints <- df %>%
+  select(company, issue) %>%
+  group_by(company, issue) %>%
+  summarise(count = n()) %>%
+  summarise(issue = issue[which.max(count)], count = max(count))
 
 
 ui<-fluidPage( 
@@ -174,20 +199,20 @@ server<-function(input,output){
       ggtitle("Total Positive Sentiment Score")
   }) 
     
-  # Modify positive sentiment per word data based on user input
-  sentiment_per_word_filtered1 <- reactive({
-    sentiment_per_word %>%
-      slice_max(order_by = weighted_sentiment, n = as.numeric(input$companies))
+  # Modify most complaints per company data based on user input
+  common_complaints_filtered <- reactive({
+    common_complaints %>%
+      slice_max(order_by = count, n = as.numeric(input$companies))
   })
   
-  # Plot positive sentiment per word based on user input
+  # Plot most complaint per company in stacked bar chart
   output$plot_05 <- renderPlot({
-    ggplot(sentiment_per_word_filtered1(), aes(reorder(company, weighted_sentiment), weighted_sentiment, fill = weighted_sentiment)) +
+    ggplot(common_complaints_filtered(), aes(count, reorder(issue, count), fill = company)) +
       geom_bar(stat = "identity") +
-      theme(axis.text = element_text(size = 10), axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-      xlab("Company Names") +
-      ylab("Sentiment Score per Word") +
-      ggtitle("Positive Sentiment Score per Word in Complaint")
+      theme(axis.text = element_text(size = 12)) +
+      labs(title = "Most Common Complaints by Company",
+         x = "Complaint",
+         y = "Occurences")
   })
     
   # Modify the 'afinn' data to include the product with the most complaints for 
@@ -205,3 +230,4 @@ server<-function(input,output){
 }
 
 shinyApp(ui=ui, server=server)
+
