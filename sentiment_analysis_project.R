@@ -16,7 +16,6 @@ setwd('~/DATA-332/Sentiment Analysis')
 df <- readRDS('Consumer_Complaints.rds')
 
 #Data cleaning
-df <- tail(df, 80000)
 names(df) <- tolower(names(df))
 
 df <- df %>%
@@ -132,10 +131,10 @@ ui<-fluidPage(
         column(12, plotOutput('plot_03'))
       ),
       fluidRow(
-        column(12, plotOutput('plot_04'))
+        column(12, plotOutput('plot_05'))
       ), 
       fluidRow(
-        column(12, plotOutput('plot_05'))
+        column(12, plotOutput('plot_04'))
       )
     )
   )
