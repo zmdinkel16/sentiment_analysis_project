@@ -2,3 +2,14 @@
  
 ## Author
 Zach Dinkel
+
+## Introduction
+
+
+## Data Dictionary
+
+
+## Data Cleaning
+
+
+## Data Analysis
