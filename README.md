@@ -1,2 +1,2 @@
-# project_1
+# Sentiment Analysis of Financial Companies
  
