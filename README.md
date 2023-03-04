@@ -13,4 +13,4 @@ Zach Dinkel
 
 
 ## Data Analysis
-<img src="/images/Rplot.png" alt="Girl in a jacket">
+<img src="/images/Rplot.png" alt="Girl in a jacket" width="80%" height="80%">
