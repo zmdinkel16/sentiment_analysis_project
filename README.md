@@ -22,7 +22,7 @@ Zach Dinkel
 * There were the least amount of complaints during the winter season
 * Although this graph is interesting to look at, it does not give use much information past what is stated above
 <br /><br /><br />
-1. Created an interactive shiny application to display information for the amount of companies that the user chooses
+1. Created an interactive shiny application to display information about the actualy complaints received by the companies in the dataset
 ### Graphs 2 thru 7 - Shiny App Manipulation
 <img src="/images/Shinyapp1.png" alt="Girl in a jacket" width="100%" height="100%">
 <img src="/images/Shinyapp2.png" alt="Girl in a jacket" width="100%" height="100%">
