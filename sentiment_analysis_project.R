@@ -210,8 +210,8 @@ server<-function(input,output){
       geom_bar(stat = "identity") +
       theme(axis.text = element_text(size = 12)) +
       labs(title = "Most Common Complaints by Company",
-         x = "Complaint",
-         y = "Occurences")
+         x = "Occurences",
+         y = "Complaint")
   })
     
   # Modify the 'afinn' data to include the product with the most complaints for 
